@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Islamic Productivity System</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>🌙 Islamic Productivity System</h1>
+        <p>Track Salah, Quran, Study & Self Improvement</p>
+    </header>
+
+    <section class="dashboard">
+
+        <div class="card">
+            <h3>Today's Score</h3>
+            <span id="todayScore">0 XP</span>
+        </div>
+
+        <div class="card">
+            <h3>Level</h3>
+            <span id="level">1</span>
+        </div>
+
+        <div class="card">
+            <h3>Streak</h3>
+            <span id="streak">0 🔥</span>
+        </div>
+
+        <div class="card">
+            <h3>Total XP</h3>
+            <span id="totalXP">0</span>
+        </div>
+
+    </section>
+
+    <section class="level-box">
+
+        <h2>XP Progress</h2>
+
+        <div class="progress">
+            <div id="progressBar"></div>
+        </div>
+
+        <p id="xpText">0 / 1000 XP</p>
+
+    </section>
+
+    <section class="tracker">
+
+        <div class="tracker-box">
+
+            <h2>🕌 Salah Points</h2>
+
+            <label><input type="checkbox" class="xp" data-points="10"> Fajr (+10)</label>
+
+            <label><input type="checkbox" class="xp" data-points="10"> Dhuhr (+10)</label>
+
+            <label><input type="checkbox" class="xp" data-points="10"> Asr (+10)</label>
+
+            <label><input type="checkbox" class="xp" data-points="10"> Maghrib (+10)</label>
+
+            <label><input type="checkbox" class="xp" data-points="10"> Isha (+10)</label>
+
+        </div>
+
+        <div class="tracker-box">
+
+            <h2>📖 Quran Points</h2>
+
+            <label><input type="checkbox" class="xp" data-points="50"> 1 Para (+50)</label>
+
+            <label><input type="checkbox" class="xp" data-points="20"> Surah Yasin (+20)</label>
+
+            <label><input type="checkbox" class="xp" data-points="20"> Surah Rahman (+20)</label>
+
+            <label><input type="checkbox" class="xp" data-points="20"> Surah Waqiah (+20)</label>
+
+            <label><input type="checkbox" class="xp" data-points="20"> Surah Mulk (+20)</label>
+
+            <label><input type="checkbox" class="xp" data-points="20"> Surah Muzzammil (+20)</label>
+
+        </div>
+
+        <div class="tracker-box">
+
+            <h2>📚 Study Points</h2>
+
+            <label>
+                Study Hours
+                <input type="number" id="studyHours" min="0" value="0">
+            </label>
+
+            <p>20 XP per hour</p>
+
+        </div>
+
+        <div class="tracker-box">
+
+            <h2>🤲 Dhikr Points</h2>
+
+            <label><input type="checkbox" class="xp" data-points="10"> Durood (+10)</label>
+
+            <label><input type="checkbox" class="xp" data-points="10"> Astaghfar (+10)</label>
+
+            <label><input type="checkbox" class="xp" data-points="10"> Alhamdulillah (+10)</label>
+
+        </div>
+
+        <div class="tracker-box">
+
+            <h2>💪 Health Points</h2>
+
+            <label><input type="checkbox" class="xp" data-points="20"> Exercise (+20)</label>
+
+            <label><input type="checkbox" class="xp" data-points="10"> Healthy Eating (+10)</label>
+
+            <label><input type="checkbox" class="xp" data-points="10"> Brush Teeth (+10)</label>
+
+            <label><input type="checkbox" class="xp" data-points="50"> No KK (+50)</label>
+
+        </div>
+
+    </section>
+
+    <section class="total-section">
+
+        <h2>Daily Total</h2>
+
+        <div id="dailyTotal">
+            0 XP
+        </div>
+
+        <button id="completeDay">
+            ✅ Complete Day
+        </button>
+
+    </section>
+
+    <section class="history">
+
+        <h2>📜 History</h2>
+
+        <div id="historyList"></div>
+
+    </section>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

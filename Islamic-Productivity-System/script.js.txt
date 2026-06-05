@@ -1,0 +1,195 @@
+const checkboxes = document.querySelectorAll(".xp");
+const studyHours = document.getElementById("studyHours");
+
+const dailyTotal = document.getElementById("dailyTotal");
+const todayScore = document.getElementById("todayScore");
+const totalXP = document.getElementById("totalXP");
+const level = document.getElementById("level");
+const streak = document.getElementById("streak");
+const progressBar = document.getElementById("progressBar");
+const xpText = document.getElementById("xpText");
+const completeDayBtn = document.getElementById("completeDay");
+const historyList = document.getElementById("historyList");
+
+let grandXP = parseInt(localStorage.getItem("grandXP")) || 0;
+let currentStreak = parseInt(localStorage.getItem("streak")) || 0;
+
+function calculateDailyXP() {
+
+    let xp = 0;
+
+    checkboxes.forEach(box => {
+        if(box.checked){
+            xp += parseInt(box.dataset.points);
+        }
+    });
+
+    xp += (parseInt(studyHours.value) || 0) * 20;
+
+    dailyTotal.innerText = xp + " XP";
+    todayScore.innerText = xp + " XP";
+
+    return xp;
+}
+
+function updateLevel() {
+
+    const levelXP = 1000;
+
+    let currentLevel = Math.floor(grandXP / levelXP) + 1;
+
+    let progress = grandXP % levelXP;
+
+    let percent = (progress / levelXP) * 100;
+
+    level.innerText = currentLevel;
+    totalXP.innerText = grandXP;
+
+    progressBar.style.width = percent + "%";
+
+    xpText.innerText =
+        progress +
+        " / " +
+        levelXP +
+        " XP";
+}
+
+checkboxes.forEach(box => {
+    box.addEventListener("change", calculateDailyXP);
+});
+
+studyHours.addEventListener("input", calculateDailyXP);
+
+function saveHistory(date, score){
+
+    let history =
+        JSON.parse(localStorage.getItem("history")) || [];
+
+    history.unshift({
+        date,
+        score
+    });
+
+    localStorage.setItem(
+        "history",
+        JSON.stringify(history)
+    );
+
+    loadHistory();
+}
+
+function loadHistory(){
+
+    historyList.innerHTML = "";
+
+    let history =
+        JSON.parse(localStorage.getItem("history")) || [];
+
+    history.forEach(item => {
+
+        const div = document.createElement("div");
+
+        div.classList.add("history-item");
+
+        div.innerHTML = `
+            <strong>${item.date}</strong><br>
+            Score: ${item.score} XP
+        `;
+
+        historyList.appendChild(div);
+
+    });
+}
+
+function lockDay(){
+
+    document
+        .querySelector(".tracker")
+        .classList.add("locked");
+
+    completeDayBtn.disabled = true;
+
+    localStorage.setItem(
+        "lockedDate",
+        new Date().toDateString()
+    );
+}
+
+function checkLockStatus(){
+
+    const lockedDate =
+        localStorage.getItem("lockedDate");
+
+    const today =
+        new Date().toDateString();
+
+    if(lockedDate === today){
+
+        document
+            .querySelector(".tracker")
+            .classList.add("locked");
+
+        completeDayBtn.disabled = true;
+    }
+}
+
+completeDayBtn.addEventListener("click", () => {
+
+    const score = calculateDailyXP();
+
+    if(score <= 0){
+        alert("Complete some tasks first.");
+        return;
+    }
+
+    const today =
+        new Date().toLocaleDateString(
+            "en-GB",
+            {
+                day:"2-digit",
+                month:"short",
+                year:"numeric"
+            }
+        );
+
+    grandXP += score;
+
+    localStorage.setItem(
+        "grandXP",
+        grandXP
+    );
+
+    currentStreak++;
+
+    localStorage.setItem(
+        "streak",
+        currentStreak
+    );
+
+    streak.innerText =
+        currentStreak + " 🔥";
+
+    saveHistory(today, score);
+
+    updateLevel();
+
+    lockDay();
+
+    alert(
+        "Day Completed!\n\nScore: " +
+        score +
+        " XP"
+    );
+
+});
+
+loadHistory();
+
+updateLevel();
+
+calculateDailyXP();
+
+streak.innerText =
+    currentStreak + " 🔥";
+
+checkLockStatus();
